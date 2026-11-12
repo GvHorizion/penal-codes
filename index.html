@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GVH Penal Code Index | Greenville Horizon</title>
+<meta name="description" content="Searchable penal code reference for Greenville Horizon (GVH).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#029FFC; --accent-soft:rgba(2,159,252,.14); --accent-line:rgba(2,159,252,.45);
+  --bg:#0a0e14; --panel:#111823; --panel-2:#16202e; --line:#243247;
+  --text:#e8eef7; --muted:#8ea0b8;
+  --felony:#ff6b7a; --misd:#ffb454; --cite:#5fd0a0; --other:#b69cff;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Outfit",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Header */
+.top{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0e1520,var(--bg))}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+.hero{padding:40px 0 28px}
+.hero h1{margin:0 0 6px;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-.02em}
+.hero h1 span{color:var(--accent)}
+.hero p{margin:0;color:var(--muted);max-width:60ch}
+
+/* Controls */
+.controls{position:sticky;top:0;z-index:20;background:rgba(10,14,20,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.controls .wrap{display:flex;gap:12px;align-items:center;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.search{position:relative;flex:1 1 320px}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+input[type=search],select{width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:inherit;font-size:1rem}
+input[type=search]{padding-left:42px}
+input[type=search]::placeholder{color:#62738b}
+input[type=search]:focus,select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+select{width:auto;min-width:170px;cursor:pointer}
+.counter{color:var(--muted);font-size:.92rem;white-space:nowrap}
+.counter b{color:var(--text)}
+.reset{background:none;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:11px 14px;font:inherit;cursor:pointer}
+.reset:hover{color:var(--text);border-color:var(--accent-line)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:260px 1fr;gap:28px;padding-top:24px;padding-bottom:64px;align-items:start}
+.nav{position:sticky;top:84px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:8px;max-height:calc(100vh - 104px);overflow:auto}
+.nav button{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;background:none;border:0;color:var(--muted);font:inherit;font-size:.95rem;padding:9px 12px;border-radius:8px;cursor:pointer}
+.nav button:hover{background:var(--panel-2);color:var(--text)}
+.nav button.active{background:var(--accent-soft);color:var(--text);box-shadow:inset 3px 0 0 var(--accent)}
+.nav .n{color:var(--muted);font-variant-numeric:tabular-nums}
+.nav button.active .n{color:var(--accent)}
+
+/* Sections */
+.cat{margin-bottom:28px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.cat-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,var(--accent-soft),transparent 70%)}
+.cat-head h2{margin:0;font-size:1.25rem;font-weight:600}
+.cat-head small{color:var(--muted)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th{font-weight:500;color:var(--muted);font-size:.85rem;text-align:left;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--panel-2);white-space:nowrap}
+td{padding:12px 16px;border-bottom:1px solid #1a2535;vertical-align:top;font-size:.96rem}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#142031}
+td.code{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:600;white-space:nowrap}
+td.name{font-weight:500}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.82rem;font-weight:500;border:1px solid}
+.t-felony{color:var(--felony);border-color:rgba(255,107,122,.4);background:rgba(255,107,122,.1)}
+.t-misdemeanor{color:var(--misd);border-color:rgba(255,180,84,.4);background:rgba(255,180,84,.1)}
+.t-citation{color:var(--cite);border-color:rgba(95,208,160,.4);background:rgba(95,208,160,.1)}
+.t-other{color:var(--other);border-color:rgba(182,156,255,.4);background:rgba(182,156,255,.1)}
+.none{color:#4d5d73}
+.yes{color:var(--text)}
+.empty-cat{padding:20px;color:var(--muted)}
+
+.no-results{text-align:center;padding:64px 20px;background:var(--panel);border:1px dashed var(--line);border-radius:var(--radius)}
+.no-results h3{margin:0 0 6px;font-size:1.3rem}
+.no-results p{margin:0 0 16px;color:var(--muted)}
+.no-results button{background:var(--accent);color:#04121c;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;padding:24px 0}
+[hidden]{display:none!important}
+
+/* Tablet */
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr}
+  .nav{position:static;display:flex;gap:6px;overflow-x:auto;max-height:none;padding:8px;scrollbar-width:thin}
+  .nav button{width:auto;white-space:nowrap;flex:0 0 auto;border:1px solid var(--line)}
+  .nav button.active{box-shadow:none;border-color:var(--accent)}
+}
+/* Mobile: rows become stacked cards */
+@media (max-width:700px){
+  .wrap{padding:0 14px}
+  .hero{padding:28px 0 20px}
+  .controls .wrap>*{flex:1 1 100%}
+  select{width:100%}
+  table,thead,tbody,tr,td{display:block;min-width:0}
+  thead{display:none}
+  tr{padding:12px 14px;border-bottom:1px solid #1a2535}
+  tbody tr:last-child{border-bottom:0}
+  td{border:0;padding:3px 0;display:flex;justify-content:space-between;gap:16px}
+  td::before{content:attr(data-label);color:var(--muted);font-size:.85rem;flex:0 0 auto}
+  td.code{font-size:1rem}
+  td.name{font-size:1.02rem}
+  td.empty-field{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap hero">
+    <h1>Greenville Horizon <span>Penal Code Index</span></h1>
+    <p>Search every charge by code, name, or keyword. Fines, jail time, impoundment, and license actions are listed for each offense.</p>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <label class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search by code, offense, or keyword (e.g. (6).21, burglary, DUI)" autocomplete="off" aria-label="Search penal codes">
+    </label>
+    <select id="cls" aria-label="Filter by classification"></select>
+    <div class="counter" id="counter" aria-live="polite"></div>
+    <button class="reset" id="reset" type="button" hidden>Clear filters</button>
+  </div>
+</div>
+
+<main class="wrap layout">
+  <nav class="nav" id="nav" aria-label="Penal code categories"></nav>
+  <div id="results"></div>
+</main>
+
+<footer>
+  <div class="wrap">Greenville Horizon (GVH) Penal Code Index. Times in jail time are in seconds (s). Always confirm with current server rules.</div>
+</footer>
+
+<script>
+/* =====================================================================
+   EDIT HERE: CATEGORIES
+   Each category has an id (number) and a name.
+   A penal code belongs to the category whose id matches the number in
+   its code, e.g. "(6).21" belongs to category 6. To override, add
+   `category: 3` to any entry.
+   ===================================================================== */
+const CATEGORIES = [
+  { id: 1, name: "Crimes Against the People" },
+  { id: 2, name: "Crimes Against Property" },
+  { id: 3, name: "Crimes Against Public Decency" },
+  { id: 4, name: "Crimes Against Criminal Justice" },
+  { id: 5, name: "Crimes Against Public Peace" },
+  { id: 6, name: "Traffic Violations" },
+  { id: 7, name: "Control of a Deadly Weapon and Equipment" },
+  { id: 8, name: "Crimes Against Public Health and Safety" },
+  { id: 9, name: "Crimes Against State Dependents" }
+];
+
+/* =====================================================================
+   EDIT HERE: PENAL_CODES
+   Add, remove, or change lines freely. The site updates automatically.
+
+   Fields (all optional except code and name):
+     code        "(1).01"  Penal code number, format "(Section#).##"
+     name        "Criminal Threats"  Charge / offense name
+     type        "Felony" | "Misdemeanor" | "Citation" | any text
+     fine        "$700"  (leave out if none)
+     jail        "30s"   (leave out if none)
+     impound     true = "Yes", or text such as "Trooper Discretion"
+     suspension  true = "Yes", or text such as "30 days"
+     keywords    "dui drunk"  Extra words that make the charge searchable
+     category    3        Only needed to override the number in the code
+
+   Example:
+     { code: "(1).17", name: "New Charge", type: "Felony", fine: "$500", jail: "60s", impound: true, suspension: "7 days", keywords: "example" },
+   ===================================================================== */
+const PENAL_CODES = [
+  // Section 1: Crimes Against the People
+  { code: "(1).01", name: "Criminal Threats", type: "Misdemeanor", fine: "$700", jail: "30s", keywords: "threat" },
+  { code: "(1).02", name: "Assault", type: "Felony", fine: "$4,000", jail: "60s" },
+  { code: "(1).03", name: "Assault with a Deadly Weapon", type: "Felony", fine: "$1,500", jail: "120s", keywords: "adw" },
+  { code: "(1).04", name: "Battery", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(1).05", name: "Aggravated Battery", type: "Felony", jail: "120s" },
+  { code: "(1).06", name: "Attempted Murder", type: "Felony", fine: "$9,000", jail: "90s" },
+  { code: "(1).07", name: "Manslaughter", type: "Felony", jail: "150s" },
+  { code: "(1).08", name: "Murder", type: "Felony", fine: "$2,500", jail: "120s", keywords: "homicide kill" },
+  { code: "(1).09", name: "False Imprisonment", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(1).10", name: "Kidnapping", type: "Felony", fine: "$6,500", jail: "150s" },
+  { code: "(1).11", name: "Domestic Violence", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(1).12", name: "Domestic Violence (Physical Traumatic Injury)", type: "Felony", fine: "$10,000", jail: "120s" },
+  { code: "(1).13", name: "Assault on a Public Servant", type: "Felony", fine: "$1,000", jail: "120s" },
+  { code: "(1).14", name: "Attempted Assault on a Public Servant", type: "Felony", fine: "$1,000", jail: "100s" },
+  { code: "(1).15", name: "Attempted Assault", type: "Felony", fine: "$1,000", jail: "100s" },
+  { code: "(1).16", name: "Assault on a Peace Officer", type: "Felony", fine: "$2,000", jail: "180s", keywords: "leo police cop" },
+
+  // Section 2: Crimes Against Property
+  { code: "(2).01", name: "Arson", type: "Felony", jail: "230s", keywords: "fire" },
+  { code: "(2).02", name: "Trespassing", type: "Misdemeanor", fine: "$1,000", jail: "30s" },
+  { code: "(2).03", name: "Trespassing within a Restricted Facility", type: "Felony", fine: "$1,000", jail: "60s" },
+  { code: "(2).04", name: "Burglary", type: "Felony", jail: "150s", keywords: "break in" },
+  { code: "(2).05", name: "Possession of Burglary Tools", type: "Misdemeanor", fine: "$1,000", jail: "30s" },
+  { code: "(2).06", name: "Robbery", type: "Felony", fine: "$6,000", jail: "120s" },
+  { code: "(2).07", name: "Armed Robbery", type: "Felony", fine: "$7,500", jail: "150s" },
+  { code: "(2).08", name: "Petty Theft", type: "Misdemeanor", fine: "$1,000", keywords: "steal" },
+  { code: "(2).09", name: "Grand Theft", type: "Felony", jail: "90s", keywords: "steal" },
+  { code: "(2).10", name: "Grand Theft Auto", type: "Felony", fine: "$6,000", jail: "160s", keywords: "gta car steal" },
+  { code: "(2).11", name: "Receiving Stolen Property", type: "Felony", fine: "$10,000", jail: "90s" },
+  { code: "(2).12", name: "Extortion", type: "Felony", fine: "$10,000", jail: "150s" },
+  { code: "(2).13", name: "Forgery/Fraud", type: "Felony", jail: "90s" },
+  { code: "(2).14", name: "Vandalism", type: "Misdemeanor", fine: "$750", jail: "30s" },
+  { code: "(2).15", name: "Loitering", type: "Misdemeanor", fine: "$1,000", jail: "30s" },
+  { code: "(2).16", name: "Destruction of Civilian Property", type: "Misdemeanor", fine: "$1,000", jail: "120s" },
+  { code: "(2).17", name: "Destruction of Government Property", type: "Felony", fine: "$10,000", jail: "230s" },
+
+  // Section 3: Crimes Against Public Decency
+  { code: "(3).01", name: "Lewd or Dissolute Conduct In Public", type: "Misdemeanor", jail: "90s" },
+  { code: "(3).02", name: "Stalking", type: "Misdemeanor", jail: "90s" },
+  { code: "(3).03", name: "Public Urination", type: "Misdemeanor", jail: "120s" },
+  { code: "(3).04", name: "Public Defecation", type: "Misdemeanor", jail: "120s" },
+  { code: "(3).05", name: "Public Intoxication", type: "Misdemeanor", jail: "120s", keywords: "drunk" },
+
+  // Section 4: Crimes Against Criminal Justice
+  { code: "(4).01", name: "Bribery", type: "Felony", fine: "$10,000", jail: "120s" },
+  { code: "(4).02", name: "Dissuading a Victim", type: "Felony", jail: "60s" },
+  { code: "(4).03", name: "False Information to a Peace Officer", type: "Misdemeanor", jail: "120s" },
+  { code: "(4).04", name: "Filing a False Police Report", type: "Misdemeanor", jail: "60s" },
+  { code: "(4).05", name: "Failure to Identify to a Peace Officer", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(4).06", name: "Impersonation of a Public Servant", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(4).07", name: "Obstruction of a Peace Officer", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(4).08", name: "Resisting a Peace Officer", type: "Misdemeanor", fine: "$1,000", jail: "120s", keywords: "resisting arrest" },
+  { code: "(4).09", name: "Escape from Custody", type: "Felony", fine: "$1,000", jail: "210s" },
+  { code: "(4).10", name: "Prisoner Breakout", type: "Felony", fine: "$10,000", jail: "90s" },
+  { code: "(4).11", name: "Misuse of Government Hotline", type: "Misdemeanor", fine: "$1,000" },
+  { code: "(4).12", name: "Tampering with Evidence", type: "Misdemeanor", fine: "$1,000" },
+  { code: "(4).13", name: "Introduction of Contraband", type: "Felony", jail: "120s" },
+  { code: "(4).14", name: "False Arrest", type: "Felony", fine: "$10,000", jail: "120s" },
+  { code: "(4).15", name: "Failure to Inform", type: "Misdemeanor", fine: "$500" },
+  { code: "(4).16", name: "Obstruction of Justice", type: "Felony", fine: "$500", jail: "30s" },
+  { code: "(4).17", name: "Disorderly Conduct", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(4).18", name: "Failure to Comply with a Lawful Order", type: "Misdemeanor", fine: "$500", jail: "30s" },
+  { code: "(4).19", name: "Aiding and Abetting", type: "Misdemeanor", jail: "90s" },
+
+  // Section 5: Crimes Against Public Peace
+  { code: "(5).01", name: "Disturbing the Peace", type: "Misdemeanor", fine: "$500" },
+  { code: "(5).02", name: "Unlawful Assembly", type: "Felony", jail: "90s" },
+  { code: "(5).03", name: "Inciting Riot", type: "Felony", fine: "$1,000", jail: "120s" },
+
+  // Section 6: Traffic Violations
+  { code: "(6).01", name: "Invalid/No Vehicle Registration/Insurance", type: "Citation", fine: "$200", impound: "Trooper Discretion" },
+  { code: "(6).02", name: "Driving Without a License", type: "Citation", fine: "$1,000", impound: "Trooper Discretion" },
+  { code: "(6).03", name: "Driving With a Suspended or Revoked License", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(6).04", name: "Accident Reporting Requirements - Property Damage", type: "Misdemeanor", fine: "$1,000", impound: "Trooper Discretion" },
+  { code: "(6).05", name: "Accident Reporting Requirements - Injury or Death", type: "Felony", fine: "$10,000", jail: "120s" },
+  { code: "(6).06", name: "Failure to Obey Traffic Signal", type: "Citation", fine: "$250", keywords: "red light" },
+  { code: "(6).07", name: "Driving Opposite Lanes", type: "Misdemeanor", fine: "$500", keywords: "wrong way" },
+  { code: "(6).08", name: "Failure to Maintain Lane", type: "Citation", fine: "$250" },
+  { code: "(6).09", name: "Unsafe Following Distance", type: "Citation", fine: "$250", keywords: "tailgating" },
+  { code: "(6).10", name: "Failure to Yield to Civilian", type: "Citation", fine: "$250" },
+  { code: "(6).11", name: "Failure to Yield to Emergency Vehicle", type: "Citation", fine: "$500" },
+  { code: "(6).12", name: "Unsafe Turn", type: "Citation", fine: "$250" },
+  { code: "(6).13", name: "Unsafe Lane Change", type: "Citation", fine: "$250" },
+  { code: "(6).14", name: "Illegal U-Turn", type: "Citation", fine: "$250" },
+  { code: "(6).15", name: "Speeding (5-15 MPH Over)", type: "Citation", fine: "$250" },
+  { code: "(6).16", name: "Speeding (16-30 MPH Over)", type: "Citation", fine: "$360" },
+  { code: "(6).17", name: "Felony Speeding (31+ MPH Over)", type: "Felony", fine: "$880", jail: "80s" },
+  { code: "(6).18", name: "Unreasonably Slow / Stopped", type: "Citation", fine: "$250" },
+  { code: "(6).19", name: "Failure to Obey Stop Sign", type: "Citation", fine: "$250" },
+  { code: "(6).20", name: "Illegally Parked", type: "Citation", fine: "$250" },
+  { code: "(6).21", name: "Reckless Driving", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(6).22", name: "Street Racing", type: "Misdemeanor", fine: "$400", impound: true },
+  { code: "(6).23", name: "Throwing Objects", type: "Misdemeanor", fine: "$1,000" },
+  { code: "(6).24", name: "Operating While Intoxicated", type: "Misdemeanor", fine: "$2,000", jail: "60s", impound: true, keywords: "dui dwi drunk driving owi" },
+  { code: "(6).25", name: "Enhanced Operating While Intoxicated", type: "Felony", fine: "$4,000", jail: "120s", impound: true, keywords: "dui dwi drunk driving owi" },
+  { code: "(6).26", name: "Alcohol Beverages in Motor Vehicles", type: "Citation", fine: "$400", keywords: "open container" },
+  { code: "(6).27", name: "Evading a Peace Officer", type: "Misdemeanor", jail: "270s", keywords: "fleeing pursuit" },
+  { code: "(6).28", name: "Felony Evading a Peace Officer", type: "Felony", jail: "350s", keywords: "fleeing pursuit" },
+  { code: "(6).29", name: "Road Rage", type: "Misdemeanor", fine: "$1,500" },
+  { code: "(6).30", name: "Littering", type: "Citation", fine: "$1,000" },
+  { code: "(6).31", name: "Unsafe Speed for Conditions", type: "Citation", fine: "$2,000" },
+  { code: "(6).32", name: "Public Endangerment", type: "Misdemeanor", fine: "$1,000" },
+  { code: "(6).33", name: "Impeding Traffic", type: "Citation", fine: "$250" },
+  { code: "(6).34", name: "Jaywalking", type: "Citation", fine: "$250" },
+  { code: "(6).35", name: "Unnecessary Use of Horn", type: "Citation", fine: "$480" },
+  { code: "(6).36", name: "Excessive Music/Sounds", type: "Citation", fine: "$400" },
+  { code: "(6).37", name: "Failure to Sign Citation", type: "Misdemeanor", fine: "$250", jail: "30s", impound: true },
+  { code: "(6).38", name: "Failure to Yield to Pedestrian", type: "Citation", fine: "$250" },
+  { code: "(6).39", name: "Distracted Driving", type: "Citation", fine: "$1,000", keywords: "phone" },
+  { code: "(6).40", name: "Driving on Shoulder/Emergency Lane", type: "Citation", fine: "$250" },
+  { code: "(6).41", name: "Failure to Yield for Emergency Services", type: "Citation", fine: "$1,000" },
+  { code: "(6).42", name: "Driving Without Headlights", type: "Citation", fine: "$250" },
+  { code: "(6).43", name: "Hit and Run", type: "Misdemeanor", fine: "$500", impound: true },
+  { code: "(6).44", name: "Attempted Vehicular Manslaughter", type: "Felony", fine: "$750", jail: "60s" },
+  { code: "(6).45", name: "Vehicular Manslaughter", type: "Felony", fine: "$750", jail: "120s" },
+  { code: "(6).46", name: "Reckless Evasion", type: "Felony", jail: "120s" },
+  { code: "(6).47", name: "Possession of a Stolen Vehicle", type: "Felony", jail: "120s" },
+  { code: "(6).48", name: "Reckless Endangerment", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(6).49", name: "Unroadworthy Vehicle", type: "Misdemeanor", fine: "$1,000", impound: true },
+  { code: "(6).50", name: "Passing a Stopped School Bus", type: "Misdemeanor", fine: "$500" },
+  { code: "(6).51", name: "Obstructed License Plate", type: "Citation", fine: "$150" },
+  { code: "(6).52", name: "Speeding in a School Zone (5+ MPH Over)", type: "Misdemeanor", fine: "$1,000" },
+
+  // Section 7: Control of a Deadly Weapon and Equipment
+  { code: "(7).01", name: "Possession of an Illegal Weapon", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(7).02", name: "Brandishing a Firearm", type: "Misdemeanor", fine: "$1,000", jail: "60s", keywords: "gun" },
+  { code: "(7).03", name: "Illegal Discharge of a Firearm", type: "Felony", jail: "90s", keywords: "gun shooting" },
+  { code: "(7).04", name: "Unlicensed Possession of a Firearm", type: "Felony", jail: "90s", keywords: "gun" },
+  { code: "(7).05", name: "Possession of a Stolen Weapon", type: "Felony", jail: "90s", keywords: "gun" },
+  { code: "(7).06", name: "Unlawful Distribution of a Firearm", type: "Felony", jail: "90s", keywords: "gun" },
+
+  // Section 8: Crimes Against Public Health and Safety
+  { code: "(8).01", name: "Possession of a Controlled Substance", type: "Misdemeanor", fine: "$1,000", jail: "60s", keywords: "drugs" },
+  { code: "(8).02", name: "Possession of a Controlled Substance with Intent to Sell", type: "Felony", fine: "$20,000", jail: "120s", keywords: "drugs dealing" },
+  { code: "(8).03", name: "Possession of Drug Paraphernalia", type: "Misdemeanor", fine: "$1,000", jail: "60s" },
+  { code: "(8).04", name: "Maintaining a Place for the Purpose of Distribution", type: "Felony", fine: "$10,000", jail: "90s", keywords: "drug house" },
+  { code: "(8).05", name: "Manufacture of a Controlled Substance", type: "Felony", fine: "$50,000", jail: "180s", keywords: "drugs" },
+  { code: "(8).06", name: "Sale of a Controlled Substance", type: "Felony", fine: "$5,000", jail: "180s", keywords: "drugs dealing" },
+  { code: "(8).07", name: "Under the Influence of a Controlled Substance", type: "Felony", fine: "$2,000", jail: "180s", keywords: "drugs high" },
+  { code: "(8).08", name: "Detention of Mentally Disordered Persons", type: "Misdemeanor", jail: "180s" },
+  { code: "(8).09", name: "Possession of Marijuana", type: "Felony", fine: "$5,000", jail: "180s", keywords: "weed cannabis" },
+
+  // Section 9: Crimes Against State Dependents
+  { code: "(9).01", name: "Animal Abuse/Cruelty", type: "Felony", fine: "$20,000", jail: "90s" },
+  { code: "(9).02", name: "Sale of Alcohol to a Minor", type: "Misdemeanor", fine: "$3,000" },
+  { code: "(9).03", name: "Minor Alcohol Violation", type: "Misdemeanor", fine: "$1,000" },
+  { code: "(9).04", name: "Child Endangerment", type: "Misdemeanor", fine: "$10,000", jail: "60s" }
+];
+
+/* =====================================================================
+   DISPLAY LOGIC: no need to edit below this line
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const norm = s => String(s ?? "").toLowerCase().replace(/[^a-z0-9$ ]/g, "");
+
+const state = { q: "", cat: "all", cls: "all" };
+
+function catId(e) {
+  if (e.category != null) return Number(e.category);
+  const m = /^\s*\(?(\d+)\)?/.exec(e.code || "");
+  return m ? Number(m[1]) : 0;
+}
+function sortKey(code) {
+  return String(code).replace(/\d+/g, n => n.padStart(4, "0"));
+}
+const ENTRIES = PENAL_CODES.map(e => ({
+  ...e, _cat: catId(e),
+  _hay: norm([e.code, e.name, e.type, e.fine, e.jail, e.keywords,
+    e.impound === true ? "impound impoundment" : e.impound,
+    e.suspension === true ? "suspension suspended license" : e.suspension].join(" "))
+})).sort((a, b) => sortKey(a.code).localeCompare(sortKey(b.code)));
+
+// Any entry whose category isn't listed gets its own "Other" group
+const knownIds = new Set(CATEGORIES.map(c => c.id));
+const CATS = CATEGORIES.slice();
+ENTRIES.forEach(e => { if (!knownIds.has(e._cat)) { knownIds.add(e._cat); CATS.push({ id: e._cat, name: "Other Codes" }); } });
+
+function matches(e) {
+  if (state.cat !== "all" && e._cat !== state.cat) return false;
+  if (state.cls !== "all" && (e.type || "").toLowerCase() !== state.cls) return false;
+  const terms = norm(state.q).split(/\s+/).filter(Boolean);
+  return terms.every(t => e._hay.includes(t));
+}
+
+function typeTag(type) {
+  if (!type) return '<span class="none">—</span>';
+  const k = type.toLowerCase();
+  const cls = k === "felony" ? "t-felony" : k === "misdemeanor" ? "t-misdemeanor" : k === "citation" ? "t-citation" : "t-other";
+  return `<span class="tag ${cls}">${esc(type)}</span>`;
+}
+function flag(v) {
+  if (v === true) return '<span class="yes">Yes</span>';
+  if (!v) return '<span class="none">—</span>';
+  return `<span class="yes">${esc(v)}</span>`;
+}
+function plain(v) { return v ? esc(v) : '<span class="none">—</span>'; }
+
+function buildNav() {
+  const counts = { all: ENTRIES.length };
+  ENTRIES.forEach(e => counts[e._cat] = (counts[e._cat] || 0) + 1);
+  const items = [{ id: "all", name: "All categories" }, ...CATS];
+  $("nav").innerHTML = items.map(c =>
+    `<button type="button" data-cat="${c.id}" class="${String(state.cat) === String(c.id) ? "active" : ""}">
+      <span>${c.id === "all" ? "" : "Section " + c.id + ": "}${esc(c.name)}</span><span class="n">${counts[c.id] || 0}</span></button>`).join("");
+}
+
+function buildClassFilter() {
+  const types = [...new Set(ENTRIES.map(e => e.type).filter(Boolean))];
+  $("cls").innerHTML = '<option value="all">All classifications</option>' +
+    types.map(t => `<option value="${esc(t.toLowerCase())}">${esc(t)}</option>`).join("");
+}
+
+function render() {
+  const list = ENTRIES.filter(matches);
+  const filtering = state.q.trim() || state.cat !== "all" || state.cls !== "all";
+  $("counter").innerHTML = `<b>${list.length}</b> of ${ENTRIES.length} codes`;
+  $("reset").hidden = !filtering;
+  buildNav();
+
+  if (!list.length) {
+    $("results").innerHTML = `<div class="no-results"><h3>No penal codes found</h3>
+      <p>Nothing matches your search. Check the spelling, try a shorter keyword, or search by code number.</p>
+      <button type="button" id="clear2">Clear filters</button></div>`;
+    $("clear2").onclick = clearAll;
+    return;
+  }
+
+  $("results").innerHTML = CATS.map(c => {
+    const rows = list.filter(e => e._cat === c.id);
+    if (!rows.length && (filtering || state.cat !== "all")) return "";
+    const body = rows.length ? `<div class="scroll"><table>
+      <thead><tr><th>Code</th><th>Offense</th><th>Classification</th><th>Fine</th><th>Jail time</th><th>Impound</th><th>License suspension</th></tr></thead>
+      <tbody>${rows.map(e => `<tr>
+        <td class="code" data-label="Code">${esc(e.code)}</td>
+        <td class="name" data-label="Offense">${esc(e.name)}</td>
+        <td data-label="Classification">${typeTag(e.type)}</td>
+        <td data-label="Fine">${plain(e.fine)}</td>
+        <td data-label="Jail time">${plain(e.jail)}</td>
+        <td data-label="Impound">${flag(e.impound)}</td>
+        <td data-label="License suspension">${flag(e.suspension)}</td></tr>`).join("")}</tbody></table></div>`
+      : '<div class="empty-cat">No codes in this category yet.</div>';
+    return `<section class="cat" id="cat-${c.id}"><div class="cat-head">
+      <h2>Section ${c.id}: ${esc(c.name)}</h2><small>${rows.length} ${rows.length === 1 ? "code" : "codes"}</small></div>${body}</section>`;
+  }).join("");
+}
+
+function clearAll() {
+  state.q = ""; state.cat = "all"; state.cls = "all";
+  $("q").value = ""; $("cls").value = "all";
+  render();
+}
+
+$("q").addEventListener("input", e => { state.q = e.target.value; render(); });
+$("cls").addEventListener("change", e => { state.cls = e.target.value; render(); });
+$("reset").addEventListener("click", clearAll);
+$("nav").addEventListener("click", e => {
+  const b = e.target.closest("button[data-cat]");
+  if (!b) return;
+  state.cat = b.dataset.cat === "all" ? "all" : Number(b.dataset.cat);
+  render();
+  const target = state.cat === "all" ? document.querySelector(".layout") : $("cat-" + state.cat);
+  if (target) target.scrollIntoView({ block: "start" });
+});
+
+buildClassFilter();
+render();
+</script>
+</body>
+</html>
